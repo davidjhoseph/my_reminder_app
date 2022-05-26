@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive/hive.dart';
+import 'package:reminders/Models/Reminder.dart';
+import 'package:reminders/Models/SingleList.dart';
 // import 'package:hive_flutter/hive_flutter.dart';
 import '/settings/Theme.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
@@ -11,7 +13,11 @@ void main() async {
   final appDocumentDirectory =
       await path_provider.getApplicationDocumentsDirectory();
 
-  Hive.init(appDocumentDirectory.path);
+  Hive
+  ..init(appDocumentDirectory.path)
+  ..registerAdapter(ReminderAdapter())
+  ..registerAdapter(SingleListAdapter());
+
   runApp(
     ProviderScope(
       child: MyApp(),

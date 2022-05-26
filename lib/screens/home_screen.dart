@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hive/hive.dart';
 import 'package:reminders/provider/ReminderProvider.dart';
 import 'package:reminders/screens/add_list_screen.dart';
 import 'package:reminders/screens/all_screen.dart';
@@ -135,31 +136,43 @@ class HomeScreen extends StatelessWidget {
                         ),
                       ),
                       SizedBox(height: 10),
-                      Consumer(
-                        builder: (context, watch, child) {
-                          final response = watch(reminderProvider);
-                          return response.lists.isEmpty
-                              ? Text("No List Yet")
-                              : Column(
-                                  children: [
-                                    ...response.lists
-                                        .map(
-                                          (e) => GestureDetector(
-                                            onTap: () {
-                                              Navigator.of(context).pushNamed(
-                                                  SingleListScreen.routeName);
-                                            },
-                                            child: ReminderList(
-                                              color: e.color,
-                                              icon: e.icon,
-                                              title: e.title,
-                                              reminders: e.reminders,
-                                            ),
-                                          ),
-                                        )
-                                        .toList(),
-                                  ],
-                                );
+                      FutureBuilder(
+                        future: Hive.openBox('reminderLists'),
+                        builder:
+                            (BuildContext context, AsyncSnapshot snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.done) {
+                            return Consumer(
+                              builder: (context, watch, child) {
+                                final response = watch(reminderProvider);
+                                return response.lists.isEmpty
+                                    ? Text("No List Yet")
+                                    : Column(
+                                        children: [
+                                          ...response.lists
+                                              .map(
+                                                (e) => GestureDetector(
+                                                  onTap: () {
+                                                    Navigator.of(context)
+                                                        .pushNamed(
+                                                            SingleListScreen
+                                                                .routeName);
+                                                  },
+                                                  child: ReminderList(
+                                                    color: Color(e.color),
+                                                    icon: e.icon,
+                                                    title: e.title,
+                                                    reminders: e.reminders,
+                                                  ),
+                                                ),
+                                              )
+                                              .toList(),
+                                        ],
+                                      );
+                              },
+                            );
+                          }
+                          return CircularProgressIndicator();
                         },
                       ),
                     ],

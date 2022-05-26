@@ -44,18 +44,20 @@ class _AddListScreenState extends State<AddListScreen> {
                 onPressed: titleController.text.length < 1
                     ? null
                     : () {
+                        print('Hello');
                         final SingleList list = SingleList(
+                          id: 'hello',
                           reminders: [],
                           title: titleController.text,
                           color: response.selectedColor,
                           icon: response.selectedIcon,
                         );
 
-                        // response.addToList(
-                        //   icon: response.selectedIcon,
-                        //   color: response.selectedColor,
-                        //   title: titleController.text,
-                        // );
+                        response.addToList(
+                          title: titleController.text,
+                          color: response.selectedColor,
+                          icon: response.selectedIcon,
+                        );
                         Navigator.pop(context);
                       },
                 child: Text(
@@ -76,9 +78,9 @@ class _AddListScreenState extends State<AddListScreen> {
                       Align(
                         child: CircleAvatar(
                           radius: 35,
-                          backgroundColor: response.selectedColor,
+                          backgroundColor: Color(response.selectedColor),
                           child: Icon(
-                            response.selectedIcon,
+                            IconData(response.selectedIcon, fontFamily: 'MaterialIcons'),
                             size: 35,
                             color: Colors.white,
                           ),
@@ -128,7 +130,7 @@ class _AddListScreenState extends State<AddListScreen> {
                                         width: 2),
                                   ),
                                   child: CircleAvatar(
-                                    backgroundColor: e,
+                                    backgroundColor: Color(e),
                                     radius: 25,
                                   ),
                                 ),
@@ -159,7 +161,7 @@ class _AddListScreenState extends State<AddListScreen> {
                                   child: CircleAvatar(
                                     backgroundColor: Colors.grey[200],
                                     child: Icon(
-                                      e,
+                                      IconData(e, fontFamily: 'MaterialIcons'),
                                       size: 30,
                                       color: Colors.black,
                                     ),

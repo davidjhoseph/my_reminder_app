@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class ReminderList extends StatelessWidget {
   final Color color;
-  final IconData icon;
+  final int icon;
   final String title;
   final List reminders;
   ReminderList(
@@ -22,7 +22,7 @@ class ReminderList extends StatelessWidget {
               backgroundColor: color,
               radius: 18,
               child: Icon(
-                icon,
+                IconData(icon, fontFamily: 'MaterialIcons'),
                 size: 25,
                 color: Colors.white,
               )),

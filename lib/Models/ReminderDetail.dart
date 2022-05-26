@@ -1,17 +1,34 @@
 import 'package:flutter/material.dart';
-import 'package:reminders/Models/SingleList.dart';
+import 'package:hive/hive.dart';
 
+import 'Priority.dart';
+import 'Reminder.dart';
+
+part 'ReminderDetail.g.dart';
+
+@HiveType(typeId: 2)
 class ReminderDetail {
-  SingleList list;
+  @HiveField(0)
+  String list;
+  @HiveField(1)
   DateTime date;
+  @HiveField(2)
   TimeOfDay time;
+  @HiveField(3)
   String title;
+  @HiveField(4)
   String notes;
+  @HiveField(5)
   String url;
+  @HiveField(6)
   String location;
+  @HiveField(7)
   bool flag;
-  int priority;
-  List<String> subtasks;
+  @HiveField(8)
+  Priority priority;
+  @HiveField(9)
+  List<Reminder> subtasks;
+  @HiveField(10)
   String image;
   ReminderDetail({
     required this.time,
