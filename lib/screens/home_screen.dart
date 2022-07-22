@@ -12,7 +12,7 @@ import 'package:reminders/screens/today_screen.dart';
 import 'package:reminders/widgets/ReminderList.dart';
 import 'package:reminders/widgets/home_screen/MenuBox.dart';
 
-final reminderProvider = Provider((ref) => ReminderProvider());
+final reminderProvider = ChangeNotifierProvider((ref) => ReminderProvider());
 
 class HomeScreen extends StatelessWidget {
   static const routeName = '/';
